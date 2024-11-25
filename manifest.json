@@ -1,0 +1,17 @@
+{
+    "name": "NearbyCops",
+    "short_name": "App",
+    "description": "Description of your app",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "icons": [
+      {
+        "src": "wordpress.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ]
+  }
+  
