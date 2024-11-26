@@ -4,21 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services</title>
+    <title>NearbyCops</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="manifest" href="manifest.json">
+    
 
 </head>
 
 <body class="">
-    <div class="w-full bg-blue-200">
-        <div class="p-8 py-16 mx-auto flex flex-col lg:w-1/2  gap-4 justify-center bg-blue-200">
-            <h1 class="lg:text-6xl text-4xl font-bold capitalize">Find the service provider</h1>
-            <p>Get the list of your nearby service provider.</p>
+    <div class="w-full bg-green-200">
+        <div class="p-8 py-16 mx-auto flex flex-col lg:w-1/2  gap-4 justify-center bg-green-200">
+            <h1 class="lg:text-6xl text-4xl font-bold capitalize">Find the Nearby Police Station</h1>
+            <p>Get the list of your nearby Police Stations.</p>
             <div class="flex flex-col ">
-                <input type="text" id="serviceInput" placeholder="eg:Plumbing"
+
+                <select name="cars" id="serviceInput"
                     class="my-4 focus:outline-none border px-6 py-3 rounded-lg shadow-md shadow-gray-500/50">
+                    <option value="vadapalani">Vadapalani</option>
+                    <option value="koyambedu">Koyambedu</option>
+                    <option value="arumbakkam">Arumbakkam</option>
+                </select>
                 <button onclick="findServiceProviders()"
-                    class="shadow-blue-500/50 shadow-md px-6 py-3 bg-blue-500 text-white text-xl font-semibold rounded-lg">Search</button>
+                    class="shadow-green-500/50 shadow-md px-6 py-3 bg-green-500 text-white text-xl font-semibold rounded-lg">Search</button>
             </div>
 
         </div>
@@ -31,192 +38,32 @@
 
         // Example JSON object with detailed service provider information
         const serviceProviders = {
-            "oil change": [
+            "vadapalani": [
                 {
-                    "name": "QuickLube",
-                    "area": "Downtown",
-                    "priceRange": "$30 - $70",
+                    "name": "Police R8",
+                    "address": "100 feet road, Vadapalani",
                     "contact": "555-1010"
                 },
-                {
-                    "name": "ExpressOil",
-                    "area": "Uptown",
-                    "priceRange": "$35 - $75",
-                    "contact": "555-2020"
-                },
-                {
-                    "name": "EcoLube",
-                    "area": "Suburbs",
-                    "priceRange": "$40 - $80",
-                    "contact": "555-3030"
-                },
-                {
-                    "name": "LubeMaster",
-                    "area": "City Center",
-                    "priceRange": "$32 - $72",
-                    "contact": "555-4040"
-                },
-                {
-                    "name": "AutoLube",
-                    "area": "Northside",
-                    "priceRange": "$33 - $73",
-                    "contact": "555-5050"
-                },
-                {
-                    "name": "LubePro",
-                    "area": "Southside",
-                    "priceRange": "$34 - $74",
-                    "contact": "555-6060"
-                },
-                {
-                    "name": "OilExperts",
-                    "area": "Eastside",
-                    "priceRange": "$36 - $76",
-                    "contact": "555-7070"
-                },
-                {
-                    "name": "PremiumOil",
-                    "area": "Westside",
-                    "priceRange": "$38 - $78",
-                    "contact": "555-8080"
-                },
-                {
-                    "name": "SuperLube",
-                    "area": "Old Town",
-                    "priceRange": "$31 - $71",
-                    "contact": "555-9090"
-                },
-                {
-                    "name": "LubeProPlus",
-                    "area": "New Town",
-                    "priceRange": "$37 - $77",
-                    "contact": "555-1111"
-                }
             ],
-            "tire rotation": [
+            "koyambedu": [
                 {
-                    "name": "TireCare",
-                    "area": "Downtown",
-                    "priceRange": "$25 - $50",
-                    "contact": "555-1212"
-                },
-                {
-                    "name": "SpinTires",
-                    "area": "Uptown",
-                    "priceRange": "$28 - $55",
-                    "contact": "555-2323"
-                },
-                {
-                    "name": "TirePros",
-                    "area": "Suburbs",
-                    "priceRange": "$30 - $60",
-                    "contact": "555-3434"
-                },
-                {
-                    "name": "WheelWorks",
-                    "area": "City Center",
-                    "priceRange": "$27 - $52",
-                    "contact": "555-4545"
-                },
-                {
-                    "name": "AutoTire",
-                    "area": "Northside",
-                    "priceRange": "$29 - $58",
-                    "contact": "555-5656"
-                },
-                {
-                    "name": "TireXpress",
-                    "area": "Southside",
-                    "priceRange": "$26 - $54",
-                    "contact": "555-6767"
-                },
-                {
-                    "name": "RotateRite",
-                    "area": "Eastside",
-                    "priceRange": "$24 - $49",
-                    "contact": "555-7878"
-                },
-                {
-                    "name": "TireMax",
-                    "area": "Westside",
-                    "priceRange": "$27 - $53",
-                    "contact": "555-8989"
-                },
-                {
-                    "name": "TireCarePlus",
-                    "area": "Old Town",
-                    "priceRange": "$29 - $59",
-                    "contact": "555-9090"
-                },
-                {
-                    "name": "SpinNGo",
-                    "area": "New Town",
-                    "priceRange": "$28 - $57",
+                    "name": "K 10 police station",
+                    "address": "Kaliamman kovil road, Koyambedu",
                     "contact": "555-1010"
-                }
+                },
             ],
-            "brake service": [
+            "arumbakkam": [
                 {
-                    "name": "BrakeMasters",
-                    "area": "Downtown",
-                    "priceRange": "$100 - $300",
-                    "contact": "555-1313"
+                    "name": "K8 Police",
+                    "address": "Arumbaakam,Chennai",
+                    "contact": "555-1010"
                 },
-                {
-                    "name": "SafeBrakes",
-                    "area": "Uptown",
-                    "priceRange": "$120 - $320",
-                    "contact": "555-2424"
-                },
-                {
-                    "name": "BrakePros",
-                    "area": "Suburbs",
-                    "priceRange": "$110 - $310",
-                    "contact": "555-3535"
-                },
-                {
-                    "name": "BrakeCheck",
-                    "area": "City Center",
-                    "priceRange": "$115 - $315",
-                    "contact": "555-4646"
-                },
-                {
-                    "name": "StopSafe",
-                    "area": "Northside",
-                    "priceRange": "$105 - $305",
-                    "contact": "555-5757"
-                },
-                {
-                    "name": "BrakeXperts",
-                    "area": "Southside",
-                    "priceRange": "$130 - $330",
-                    "contact": "555-6868"
-                },
-                {
-                    "name": "AutoBrake",
-                    "area": "Eastside",
-                    "priceRange": "$125 - $325",
-                    "contact": "555-7979"
-                },
-                {
-                    "name": "BrakeCare",
-                    "area": "Westside",
-                    "priceRange": "$108 - $308",
-                    "contact": "555-8080"
-                },
-                {
-                    "name": "StopRite",
-                    "area": "Old Town",
-                    "priceRange": "$112 - $312",
-                    "contact": "555-9191"
-                },
-                {
-                    "name": "BrakePlus",
-                    "area": "New Town",
-                    "priceRange": "$118 - $318",
-                    "contact": "555-1212"
-                }
-            ]
+            ],
+            
+
+
+
+
         }
 
 
@@ -252,8 +99,8 @@
         
                 <h3 class="text-2xl font-semibold">${provider.name}</h3>
                 <hr/>
-                <p class="text-base"><strong>Area:</strong> ${provider.area}</p>
-                <p class="text-base"><strong>Price Range:</strong> ${provider.priceRange}</p>
+                <p class="text-base"><strong>Area:</strong> ${provider.address}</p>
+            
                 <p class="text-base"><strong>Contact:</strong> ${provider.contact}</p>
             </div>
             `;
@@ -267,18 +114,24 @@
                 providerList.appendChild(noResult);
             }
         }
+        
 
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", () => {
-                navigator.serviceWorker
-                    .register("/service-worker.js")
-                    .then((reg) => {
-                        console.log("Service Worker Registered", reg);
-                    })
-                    .catch((err) => {
-                        console.log("Service Worker Registration Failed", err);
-                    });
-            });
+        window.addEventListener('load', () => {
+          registerSW();
+        });
+     
+        // Register the Service Worker
+        async function registerSW() {
+          if ('serviceWorker' in navigator) {
+            try {
+              await navigator
+                    .serviceWorker
+                    .register('serviceworker.js');
+            }
+            catch (e) {
+              console.log('SW registration failed');
+            }
+          }
         }
 
     </script>
