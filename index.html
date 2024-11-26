@@ -7,7 +7,8 @@
     <title>NearbyCops</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="manifest" href="manifest.json">
-    
+    <link rel="shortcut icon" href="/icons/favicon.ico" type="image/x-icon">
+
 
 </head>
 
@@ -16,14 +17,60 @@
         <div class="p-8 py-16 mx-auto flex flex-col lg:w-1/2  gap-4 justify-center bg-green-200">
             <h1 class="lg:text-6xl text-4xl font-bold capitalize">Find the Nearby Police Station</h1>
             <p>Get the list of your nearby Police Stations.</p>
-            <div class="flex flex-col ">
+            <div class="flex flex-col relative">
+                <input type="hidden" name="" id="hinput">
 
-                <select name="cars" id="serviceInput"
+                <input type="text" id="searchBox" placeholder="Type to search..."
                     class="my-4 focus:outline-none border px-6 py-3 rounded-lg shadow-md shadow-gray-500/50">
-                    <option value="vadapalani">Vadapalani</option>
-                    <option value="koyambedu">Koyambedu</option>
-                    <option value="arumbakkam">Arumbakkam</option>
-                </select>
+                <div id="results"
+                    class=" absolute bg-white p-4 rounded-md flex flex-col gap-2 shadow-green-500/50 shadow-md">
+                    <div class="result" data-keywords="vadapalani">Vadapalani</div>
+                    <div class="result" data-keywords="adyar">Adyar</div>
+                    <div class="result" data-keywords="anna_nagar">Anna Nagar</div>
+                    <div class="result" data-keywords="arumbakkam">Arumbakkam</div>
+                    <div class="result" data-keywords="aminjikarai">Aminjikarai</div>
+                    <div class="result" data-keywords="ashok_nagar">Ashok Nagar</div>
+                    <div class="result" data-keywords="ambattur">Ambattur</div>
+                    <div class="result" data-keywords="mylapore">Mylapore</div>
+                    <div class="result" data-keywords="t_nagar">T. Nagar</div>
+                    <div class="result" data-keywords="triplicane">Triplicane</div>
+
+                    <div class="result" data-keywords="adyar_awps">Adyar All Women Police Station</div>
+                    <div class="result" data-keywords="ayanavaram">Ayanavaram</div>
+                    <div class="result" data-keywords="egmore">Egmore</div>
+                    <div class="result" data-keywords="ennore">Ennore</div>
+                    <div class="result" data-keywords="kodambakkam">Kodambakkam</div>
+                    <div class="result" data-keywords="kilpauk">Kilpauk</div>
+                    <div class="result" data-keywords="madipakkam">Madipakkam</div>
+                    <div class="result" data-keywords="mount_road">Mount Road</div>
+                    <div class="result" data-keywords="nungambakkam">Nungambakkam</div>
+                    <div class="result" data-keywords="perambur">Perambur</div>
+
+                    <div class="result" data-keywords="purasawalkam">Purasawalkam</div>
+                    <div class="result" data-keywords="royapettah">Royapettah</div>
+                    <div class="result" data-keywords="selaiyur">Selaiyur</div>
+                    <div class="result" data-keywords="sholinganallur">Sholinganallur</div>
+                    <div class="result" data-keywords="st_thomas_mount">St. Thomas Mount</div>
+                    <div class="result" data-keywords="thiruvanmiyur">Thiruvanmiyur</div>
+                    <div class="result" data-keywords="tondiarpet">Tondiarpet</div>
+                    <div class="result" data-keywords="velachery">Velachery</div>
+                    <div class="result" data-keywords="villivakkam">Villivakkam</div>
+                    <div class="result" data-keywords="virugambakkam">Virugambakkam</div>
+
+                    
+                    <div class="result" data-keywords="madipakkam">Madipakkam</div>
+                    
+                    <div class="result" data-keywords="nungambakkam">Nungambakkam</div>
+                    
+                    <div class="result" data-keywords="sholinganallur">Sholinganallur</div>
+
+        
+
+                    <div class="result" data-keywords="kodungaiyur">Kodungaiyur</div>
+                    <div class="result" data-keywords="korukkupet">Korukkupet</div>
+                    <div class="result" data-keywords="manali">Manali</div>
+                    <div class="result" data-keywords="mannady">Mannady</div>
+                </div>
                 <button onclick="findServiceProviders()"
                     class="shadow-green-500/50 shadow-md px-6 py-3 bg-green-500 text-white text-xl font-semibold rounded-lg">Search</button>
             </div>
@@ -35,103 +82,289 @@
     <div id="providerList" class="p-8 mx-auto mt-2 flex flex-col lg:w-1/2 gap-6 justify-center"></div>
 
     <script>
-
-        // Example JSON object with detailed service provider information
-        const serviceProviders = {
-            "vadapalani": [
-                {
-                    "name": "Police R8",
-                    "address": "100 feet road, Vadapalani",
-                    "contact": "555-1010"
-                },
-            ],
-            "koyambedu": [
-                {
-                    "name": "K 10 police station",
-                    "address": "Kaliamman kovil road, Koyambedu",
-                    "contact": "555-1010"
-                },
-            ],
-            "arumbakkam": [
-                {
-                    "name": "K8 Police",
-                    "address": "Arumbaakam,Chennai",
-                    "contact": "555-1010"
-                },
-            ],
-            
+        var q;
+        const searchBox = document.getElementById('searchBox');
+        const results = document.querySelectorAll('.result');
+        const resBox = document.getElementById('results')
 
 
+        resBox.classList.toggle('hidden')
+
+        searchBox.addEventListener('input', () => {
+            resBox.classList.toggle('hidden')
+            const query = searchBox.value.toLowerCase();
+            results.forEach(result => {
+                const keywords = result.dataset.keywords.toLowerCase();
+                result.classList.toggle('hidden', !keywords.includes(query));
+            });
+        });
+
+        const hinput = document.getElementById('hinput')
+        results.forEach(result => {
+            result.addEventListener('click', () => {
+                searchBox.value = result.textContent;
+                hinput.value = result.dataset.keywords
+                results.forEach(r => r.classList.add('hidden'));
+                resBox.classList.toggle('hidden') // Hide results after selection
+            });
+        });
 
 
-        }
+        const list = {
+            "kodambakkam": {
+                "name": "Kodambakkam Police Station",
+                "address": "Kodambakkam, Chennai",
+                "contact": "044-23452651"
+            },
+            "kilpauk": {
+                "name": "Kilpauk Police Station",
+                "address": "Kilpauk, Chennai",
+                "contact": "044-23452708"
+            },
+            "madipakkam": {
+                "name": "Madipakkam Police Station",
+                "address": "Madipakkam, Chennai",
+                "contact": "044-23452776"
+            },
+            "mount_road": {
+                "name": "Mount Road Police Station",
+                "address": "Anna Salai, Chennai",
+                "contact": "044-23452661, 28521720"
+            },
+            "nungambakkam": {
+                "name": "Nungambakkam Police Station",
+                "address": "Nungambakkam, Chennai",
+                "contact": "044-23452688, 28274933"
+            },
+            "perambur": {
+                "name": "Perambur Police Station",
+                "address": "Perambur, Chennai",
+                "contact": "044-23452723"
+            },
+            "purasawalkam": {
+                "name": "Purasawalkam Police Station",
+                "address": "Purasawalkam, Chennai",
+                "contact": "044-23452677"
+            },
+            "royapettah": {
+                "name": "Royapettah Police Station",
+                "address": "Royapettah, Chennai",
+                "contact": "044-23452669"
+            },
+            "selaiyur": {
+                "name": "Selaiyur Police Station",
+                "address": "Selaiyur, Chennai",
+                "contact": "044-23452774"
+            },
+            "sholinganallur": {
+                "name": "Sholinganallur Police Station",
+                "address": "Sholinganallur, Chennai",
+                "contact": "044-23452785"
+            },
+            "kodungaiyur": {
+                "name": "Kodungaiyur Police Station",
+                "address": "Kodungaiyur, Chennai",
+                "contact": "044-23452709"
+            },
+            "korukkupet": {
+                "name": "Korukkupet Police Station",
+                "address": "Korukkupet, Chennai",
+                "contact": "044-23452711"
+            },
+            "manali": {
+                "name": "Manali Police Station",
+                "address": "Manali, Chennai",
+                "contact": "044-23452715"
+            },
+            "mannady": {
+                "name": "Mannady Police Station",
+                "address": "Mannady, Chennai",
+                "contact": "044-23452612"
+            },
+            "otteri": {
+                "name": "Otteri Police Station",
+                "address": "Otteri, Chennai",
+                "contact": "044-23452704"
+            },
+            "perungudi": {
+                "name": "Perungudi Police Station",
+                "address": "Perungudi, Chennai",
+                "contact": "044-23452595"
+            },
+            "poonamallee": {
+                "name": "Poonamallee Police Station",
+                "address": "Poonamallee, Chennai",
+                "contact": "044-23452761"
+            },
+            "red_hills": {
+                "name": "Red Hills Police Station",
+                "address": "Red Hills, Chennai",
+                "contact": "044-23452729"
+            },
+            "saidapet": {
+                "name": "Saidapet Police Station",
+                "address": "Saidapet, Chennai",
+                "contact": "044-23452594"
+            },
+            "thirumangalam": {
+                "name": "Thirumangalam Police Station",
+                "address": "Thirumangalam, Chennai",
+                "contact": "044-23452718"
+            },
+            "vadapalani": {
+                "name": "R8 Vadapalani Police Station",
+                "address": "100 Feet Road, Vadapalani, Chennai",
+                "contact": "044-23452666"
+            },
+            "adyar": {
+                "name": "Adyar Police Station",
+                "address": "Adyar, Chennai",
+                "contact": "044-23452583, 24913552"
+            },
+            "anna_nagar": {
+                "name": "Anna Nagar Police Station",
+                "address": "Anna Nagar, Chennai",
+                "contact": "044-23452719, 26266296"
+            },
+            "arumbakkam": {
+                "name": "K8 Police Station",
+                "address": "Arumbakkam, Chennai",
+                "contact": "044-23452733, 23631220"
+            },
+            "aminjikarai": {
+                "name": "Aminjikarai Police Station",
+                "address": "Aminjikarai, Chennai",
+                "contact": "044-23452716, 26261276"
+            },
+            "ashok_nagar": {
+                "name": "Ashok Nagar Police Station",
+                "address": "Ashok Nagar, Chennai",
+                "contact": "044-23452617, 24748880"
+            },
+            "ambattur": {
+                "name": "Ambattur Police Station",
+                "address": "Ambattur, Chennai",
+                "contact": "044-23452797"
+            },
+            "mylapore": {
+                "name": "Mylapore Police Station",
+                "address": "Mylapore, Chennai",
+                "contact": "044-23452553"
+            },
+            "t_nagar": {
+                "name": "T. Nagar Police Station",
+                "address": "T. Nagar, Chennai",
+                "contact": "044-23452611"
+            },
+            "triplicane": {
+                "name": "Triplicane Police Station",
+                "address": "Triplicane, Chennai",
+                "contact": "044-23452653"
+            },
+
+            "adyar_awps": {
+                "name": "Adyar All Women Police Station",
+                "address": "Adyar, Chennai",
+                "contact": "044-23452586, 24415732"
+            },
+            "ayanavaram": {
+                "name": "Ayanavaram Police Station",
+                "address": "Ayanavaram, Chennai",
+                "contact": "044-23452705, 26651054"
+            },
+            "egmore": {
+                "name": "Egmore Police Station",
+                "address": "Egmore, Chennai",
+                "contact": "044-23452673, 24957688"
+            },
+            "ennore": {
+                "name": "Ennore Police Station",
+                "address": "Ennore, Chennai",
+                "contact": "044-25750600"
+            },
+            "kodambakkam": {
+                "name": "Kodambakkam Police Station",
+                "address": "Kodambakkam, Chennai",
+                "contact": "044-23452651"
+            },
+            "kilpauk": {
+                "name": "Kilpauk Police Station",
+                "address": "Kilpauk, Chennai",
+                "contact": "044-23452708"
+            },
+            "madipakkam": {
+                "name": "Madipakkam Police Station",
+                "address": "Madipakkam, Chennai",
+                "contact": "044-23452776"
+            },
+            "mount_road": {
+                "name": "Mount Road Police Station",
+                "address": "Anna Salai, Chennai",
+                "contact": "044-23452661, 28521720"
+            },
+            "nungambakkam": {
+                "name": "Nungambakkam Police Station",
+                "address": "Nungambakkam, Chennai",
+                "contact": "044-23452688, 28274933"
+            },
+            "perambur": {
+                "name": "Perambur Police Station",
+                "address": "Perambur, Chennai",
+                "contact": "044-23452723"
+            }
+        };
 
 
 
 
         function findServiceProviders() {
             // Get the service name input by the user and convert it to lowercase
-            const serviceInput = document.getElementById('serviceInput').value.trim().toLowerCase();
+            providerList.innerHTML = ""
+            const serviceInput = document.getElementById('hinput').value
 
-            // Initialize an empty array to hold matched providers
-            let matchedProviders = [];
+            if (serviceInput in list) {
+                const providerCard = document.createElement('div');
+                providerCard.className = 'provider-card';
 
-            // Loop through the serviceProviders object to find matching services
-            for (let service in serviceProviders) {
-                if (service.includes(serviceInput)) {
-                    matchedProviders = serviceProviders[service];
-                    break;
-                }
-            }
-
-            // Get the provider list element
-            const providerList = document.getElementById('providerList');
-            providerList.innerHTML = ''; // Clear any previous results
-
-            if (matchedProviders.length > 0) {
-                // Display the providers with their details
-                matchedProviders.forEach(provider => {
-                    const providerCard = document.createElement('div');
-                    providerCard.className = 'provider-card';
-
-                    providerCard.innerHTML = `
+                providerCard.innerHTML = `
             <div class="p-6 border shadow-md rounded-lg flex flex-col gap-4">
         
-                <h3 class="text-2xl font-semibold">${provider.name}</h3>
+                <h3 class="text-2xl font-semibold">${list[serviceInput].name}</h3>
                 <hr/>
-                <p class="text-base"><strong>Area:</strong> ${provider.address}</p>
+                <p class="text-base"><strong>Area:</strong> ${list[serviceInput].address}</p>
             
-                <p class="text-base"><strong>Contact:</strong> ${provider.contact}</p>
+                <p class="text-base"><strong>Contact:</strong> ${list[serviceInput].contact}</p>
             </div>
             `;
 
-                    providerList.appendChild(providerCard);
-                });
-            } else {
-                // Display a message if no providers are found
+                providerList.appendChild(providerCard);
+
+            }
+            else {
                 const noResult = document.createElement('p');
                 noResult.textContent = 'No providers found for the entered service.';
                 providerList.appendChild(noResult);
+
             }
         }
-        
+
 
         window.addEventListener('load', () => {
-          registerSW();
+            registerSW();
         });
-     
+
         // Register the Service Worker
         async function registerSW() {
-          if ('serviceWorker' in navigator) {
-            try {
-              await navigator
-                    .serviceWorker
-                    .register('serviceworker.js');
+            if ('serviceWorker' in navigator) {
+                try {
+                    await navigator
+                        .serviceWorker
+                        .register('serviceworker.js');
+                }
+                catch (e) {
+                    console.log('SW registration failed');
+                }
             }
-            catch (e) {
-              console.log('SW registration failed');
-            }
-          }
         }
 
     </script>

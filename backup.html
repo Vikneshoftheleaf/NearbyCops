@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NearbyCops</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="manifest" href="manifest.json">
+    
+
+</head>
+
+<body class="">
+    <div class="w-full bg-green-200">
+        <div class="p-8 py-16 mx-auto flex flex-col lg:w-1/2  gap-4 justify-center bg-green-200">
+            <h1 class="lg:text-6xl text-4xl font-bold capitalize">Find the Nearby Police Station</h1>
+            <p>Get the list of your nearby Police Stations.</p>
+            <div class="flex flex-col ">
+
+                <select name="cars" id="serviceInput"
+                    class="my-4 focus:outline-none border px-6 py-3 rounded-lg shadow-md shadow-gray-500/50">
+                    <option value="vadapalani">Vadapalani</option>
+                    <option value="koyambedu">Koyambedu</option>
+                    <option value="arumbakkam">Arumbakkam</option>
+                </select>
+                <button onclick="findServiceProviders()"
+                    class="shadow-green-500/50 shadow-md px-6 py-3 bg-green-500 text-white text-xl font-semibold rounded-lg">Search</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="providerList" class="p-8 mx-auto mt-2 flex flex-col lg:w-1/2 gap-6 justify-center"></div>
+
+    <script>
+
+        // Example JSON object with detailed service provider information
+        const serviceProviders = {
+            "vadapalani": [
+                {
+                    "name": "Police R8",
+                    "address": "100 feet road, Vadapalani",
+                    "contact": "555-1010"
+                },
+            ],
+            "koyambedu": [
+                {
+                    "name": "K 10 police station",
+                    "address": "Kaliamman kovil road, Koyambedu",
+                    "contact": "555-1010"
+                },
+            ],
+            "arumbakkam": [
+                {
+                    "name": "K8 Police",
+                    "address": "Arumbaakam,Chennai",
+                    "contact": "555-1010"
+                },
+            ],
+            
+
+
+
+
+        }
+
+
+
+
+        function findServiceProviders() {
+            // Get the service name input by the user and convert it to lowercase
+            const serviceInput = document.getElementById('serviceInput').value.trim().toLowerCase();
+
+            // Initialize an empty array to hold matched providers
+            let matchedProviders = [];
+
+            // Loop through the serviceProviders object to find matching services
+            for (let service in serviceProviders) {
+                if (service.includes(serviceInput)) {
+                    matchedProviders = serviceProviders[service];
+                    break;
+                }
+            }
+
+            // Get the provider list element
+            const providerList = document.getElementById('providerList');
+            providerList.innerHTML = ''; // Clear any previous results
+
+            if (matchedProviders.length > 0) {
+                // Display the providers with their details
+                matchedProviders.forEach(provider => {
+                    const providerCard = document.createElement('div');
+                    providerCard.className = 'provider-card';
+
+                    providerCard.innerHTML = `
+            <div class="p-6 border shadow-md rounded-lg flex flex-col gap-4">
+        
+                <h3 class="text-2xl font-semibold">${provider.name}</h3>
+                <hr/>
+                <p class="text-base"><strong>Area:</strong> ${provider.address}</p>
+            
+                <p class="text-base"><strong>Contact:</strong> ${provider.contact}</p>
+            </div>
+            `;
+
+                    providerList.appendChild(providerCard);
+                });
+            } else {
+                // Display a message if no providers are found
+                const noResult = document.createElement('p');
+                noResult.textContent = 'No providers found for the entered service.';
+                providerList.appendChild(noResult);
+            }
+        }
+        
+
+        window.addEventListener('load', () => {
+          registerSW();
+        });
+     
+        // Register the Service Worker
+        async function registerSW() {
+          if ('serviceWorker' in navigator) {
+            try {
+              await navigator
+                    .serviceWorker
+                    .register('serviceworker.js');
+            }
+            catch (e) {
+              console.log('SW registration failed');
+            }
+          }
+        }
+
+    </script>
+</body>
+
+</html>
